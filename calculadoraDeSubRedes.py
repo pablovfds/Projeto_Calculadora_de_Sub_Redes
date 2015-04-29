@@ -113,21 +113,23 @@ def transformaBinarioEmDecimal(ipBinario): return str(int(ipBinario, 2))
 def calculaSubRedes(enderecoIPOriginal, mascaraOriginal, numeroDeSubRedes):
     ipOriginal = transformaEnderecoParaBinario(enderecoIPOriginal)[:mascaraOriginal]
     listaDeIpDeRede = []
-    formatacao = '{0:7s} | {1:8s} | {2:14s} | {3:32s} | {4:10s}'
-    formatacaoTitulo = '{0:7s} | {1:7s} | {2:15s} | {3:32s} | {4:10s}'
+    formatacao = '{0:21s} | {1:14s} | {2:32s} | {3:10s}'
+    formatacaoTitulo = '{0:20s} | {1:15s} | {2:32s} | {3:10s}'
     print ("-"*90)
-    print(formatacaoTitulo.format("","Sub Rede", "Endereço IP", "Forma Binaria", "Forma Decimal"))
+    print (" "*35+"Tabela de Sub Redes")
+    print(formatacaoTitulo.format("Sub Rede", "Endereço IP", "Forma Binaria", "Forma Decimal"))
     for i in range(numeroDeSubRedes):
         aux = (calculaQuantidadeDeBits(numeroDeSubRedes)-len(bin(i)[2:]))*"0" + bin(i)[2:]
         ipR = ipOriginal + aux + (32-(len(ipOriginal)+len(aux)))*"0"
         ipB = ipOriginal + aux + (32-(len(ipOriginal)+len(aux)))*"1"
         listaDeIpDeRede.append(transformaParaFormaIp(ipR))
-        print(formatacao.format("Inicial",str(i+1), transformaParaFormaIp(ipR), ipR, transformaBinarioEmDecimal(ipR)))
-        print(formatacao.format("Final","", transformaParaFormaIp(ipB), ipB, transformaBinarioEmDecimal(ipB)))
+        print(formatacao.format(str(i+1)+ " - Endereço Inicial", transformaParaFormaIp(ipR), ipR, transformaBinarioEmDecimal(ipR)))
+        print(formatacao.format(str(i+1)+ " - Endereço Final", transformaParaFormaIp(ipB), ipB, transformaBinarioEmDecimal(ipB)))
     calculaRotas(listaDeIpDeRede, numeroDeSubRedes, mascaraOriginal)
 # Calcula as rotas de cada sub rede
 def calculaRotas(listaDeIpDeRede, numeroDeSubRedes, mascaraOriginal):
     print ("-"*90)
+    print (" "*35+"Tabela de rotas")
     formatacao = '{0:14s} | {1:14s} | {2:18s} | {3:6s} | {4:9s}'
     formatacaoTitulo = '{0:14s} | {1:14s} | {2:18s} | {3:6s} | {4:9s}'
     print(formatacaoTitulo.format("Destination", "Gateway", "Mascara", "Option", "Interface"))
